@@ -1,0 +1,12 @@
+{
+    "Accordion": {
+      "dependencies": ["Flex", "Icon", "Heading", "Column"]
+    },
+    "Button": {
+      "dependencies": []
+    },
+    "Card": {
+      "dependencies": ["Button", "Heading"]
+    }
+  }
+  

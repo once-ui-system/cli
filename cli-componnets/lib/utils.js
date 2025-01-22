@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { logger } from "./logger.js";
+import { logger } from "./resolveDeps.js";
 
 export async function resolveDependencies(component) {
   const dependenciesDir = path.resolve("src/dependencies");

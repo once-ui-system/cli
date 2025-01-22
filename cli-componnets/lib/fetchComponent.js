@@ -1,29 +1,35 @@
-import fs from "fs";
-import path from "path";
-import { logger } from "./logger.js";
+const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
 
-export async function fetchComponent(component) {
-  const componentsDir = path.resolve("src/components");
-  const componentDir = path.resolve(componentsDir, component);
+// GitHub repository URL
+const REPO_URL = "https://raw.githubusercontent.com/once-ui-system/nextjs-starter/main/src/once-ui/components";
 
-  if (!fs.existsSync(componentsDir)) {
-    fs.mkdirSync(componentsDir, { recursive: true });
-    logger.success("Created components directory.");
-  }
+async function fetchComponent(componentName) {
+  try {
+    // Fetch .tsx and .scss files for the component
+    const tsxUrl = `${REPO_URL}/${componentName}/${componentName}.tsx`;
+    const scssUrl = `${REPO_URL}/${componentName}/${componentName}.module.scss`;
 
-  if (!fs.existsSync(componentDir)) {
-    fs.mkdirSync(componentDir, { recursive: true });
-    logger.success(`Created directory for ${component}.`);
-  }
+    const [tsxRes, scssRes] = await Promise.all([
+      axios.get(tsxUrl),
+      axios.get(scssUrl)
+    ]);
 
-  const componentFile = path.resolve(componentDir, `${component}.jsx`);
-  if (!fs.existsSync(componentFile)) {
-    fs.writeFileSync(
-      componentFile,
-      `// ${component} Component\n\nexport default function ${component}() {\n  return <div>${component} works!</div>;\n}\n`
-    );
-    logger.success(`Created ${component} component file.`);
-  } else {
-    logger.info(`${component} already exists.`);
+    // Store files locally (could be in temp storage or user-defined directory)
+    const dir = path.join(__dirname, "../components", componentName);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    // Save .tsx and .scss files
+    fs.writeFileSync(path.join(dir, `${componentName}.tsx`), tsxRes.data);
+    fs.writeFileSync(path.join(dir, `${componentName}.module.scss`), scssRes.data);
+
+    console.log(`Successfully added component: ${componentName}`);
+  } catch (error) {
+    console.error(`Error fetching component ${componentName}:`, error.message);
   }
 }
+
+module.exports = fetchComponent;
