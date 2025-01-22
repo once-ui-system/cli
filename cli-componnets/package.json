@@ -1,36 +1,31 @@
 {
   "name": "once-ui-kit",
-  "version": "1.1.9",
-  "description": "Once UI Component Library CLI",
+  "version": "2.0.2",
+  "description": "CLI tool for installing Once UI Kit components",
   "type": "module",
   "bin": {
-    "once-ui-kit": "dist/index.js"
+    "once-ui-kit": "./bin/cli.js"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "vitest"
+    "start": "node bin/cli.js"
   },
   "dependencies": {
-    "commander": "^11.1.0",
-    "execa": "^8.0.1",
-    "fs-extra": "^11.2.0",
-    "ora": "^7.0.1",
-    "prompts": "^2.4.2",
+    "axios": "^1.6.2",
     "chalk": "^5.3.0",
-    "node-fetch": "^3.3.2",
-    "prettier": "^3.1.1",
-    "typescript": "^5.3.3",
-    "zod": "^3.22.4"
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.12",
+    "ora": "^7.0.1",
+    "fs-extra": "^11.1.1",
+    "gradient-string": "^2.0.2",
+    "figlet": "^1.7.0",
+    "boxen": "^7.1.1"
   },
-  "devDependencies": {
-    "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.10.5",
-    "@types/prompts": "^2.4.9",
-    "tsup": "^8.0.1",
-    "vitest": "^1.1.0"
-  }
+  "keywords": [
+    "ui",
+    "components",
+    "cli",
+    "once-ui"
+  ],
+  "author": "",
+  "license": "MIT"
 }

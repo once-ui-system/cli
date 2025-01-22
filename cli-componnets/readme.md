@@ -1,58 +1,185 @@
-# Once UI
+# Once UI Kit CLI 🎨
 
-A simple and lightweight UI component library with a CLI tool for easy component integration.
+A powerful command-line interface for installing Once UI Kit components in your Next.js projects. Seamlessly integrate beautiful, reusable UI components with automatic dependency resolution and SCSS support.
 
-## Installation
+![Once UI Kit CLI](https://raw.githubusercontent.com/once-ui-system/nextjs-starter/main/public/once-ui-banner.png)
 
-You don't need to install the package directly. Simply use npx to add components as needed:
+## ✨ Features
 
-```bash
-npx once-ui@latest add <component-name>
-```
+- 🎯 Interactive component selection
+- 🔄 Automatic dependency resolution
+- 🎨 SCSS module support
+- 📁 Smart project structure detection
+- 💅 Professional CLI interface
+- ⚡ Fast and easy installation
+- 🔍 Component preview and search
+- 🛠️ Zero configuration needed
 
-## Available Components
-
-- accordion
-- button
-
-## Usage
-
-1. Add a component to your project:
+## 🚀 Quick Start
 
 ```bash
-npx once-ui@latest add accordion
+# Install globally (optional)
+npm install -g once-ui-kit
+
+# Or use directly with npx
+npx once-ui-kit init
 ```
 
-2. Import and use the component:
+## 📦 Installation
 
-```jsx
-import { Accordion } from './once-ui/accordion';
+You can install Once UI Kit CLI globally:
 
-function App() {
-  return (
-    <Accordion title="Click me">
-      <p>Content goes here</p>
-    </Accordion>
-  );
-}
+```bash
+npm install -g once-ui-kit
 ```
 
-## Component Documentation
+Or use it directly with npx (recommended):
 
-### Accordion
+```bash
+npx once-ui-kit <command>
+```
 
-Props:
-- `title`: string - The header text
-- `children`: ReactNode - The content to be shown/hidden
-- `className`: string (optional) - Additional CSS classes
+## 🛠️ Usage
 
-### Button
+### Initialize and Select Components
 
-Props:
-- `variant`: 'primary' | 'secondary' | 'outline' (default: 'primary')
-- `size`: 'small' | 'medium' | 'large' (default: 'medium')
-- All standard button HTML attributes
+```bash
+npx once-ui-kit init
+```
 
-## License
+This launches an interactive component selector where you can choose which components to install. Components will be installed in the appropriate directory based on your project structure:
+
+- Next.js App Router: `app/components/once-ui-comp/`
+- Next.js Pages Router: `src/components/once-ui-comp/`
+- Default: `components/once-ui-comp/`
+
+### Add a Specific Component
+
+```bash
+npx once-ui-kit add <component-name>
+```
+
+Example:
+```bash
+npx once-ui-kit add Accordion
+```
+
+This will install the Accordion component along with its:
+- Required dependencies
+- SCSS modules
+- Associated styles
+
+### List Available Components
+
+```bash
+npx once-ui-kit list
+```
+
+## 📚 Available Components
+
+<details>
+<summary>Click to expand component list</summary>
+
+- Accordion
+- Arrow
+- Avatar
+- AvatarGroup
+- Badge
+- Background
+- Button
+- Carousel
+- Card
+- Column
+- Checkbox
+- Chip
+- ColorInput
+- DateInput
+- DatePicker
+- DateRangePicker
+- Dialog
+- Dropdown
+- DropdownWrapper
+- Fade
+- Feedback
+- Flex
+- GlitchFx
+- Grid
+- Heading
+- HoloFx
+- Icon
+- IconButton
+- InlineCode
+- Input
+- InteractiveDetails
+- Kbd
+- LetterFx
+- Line
+- Logo
+- LogoCloud
+- NavIcon
+- NumberInput
+- Option
+- PasswordInput
+- RadioButton
+- RevealFx
+- Row
+- Scroller
+- SegmentedControl
+- Select
+- Skeleton
+- SmartImage
+- SmartLink
+- Spinner
+- StatusIndicator
+- StylePanel
+- StyleOverlay
+- Switch
+- Tag
+- TagInput
+- Text
+- Textarea
+- TiltFx
+- Toast
+- Toaster
+- ToastProvider
+- ToggleButton
+- Tooltip
+- User
+- UserMenu
+
+</details>
+
+## 🔄 Automatic Dependency Resolution
+
+When you install a component, the CLI automatically:
+
+1. Detects and installs required component dependencies
+2. Installs associated SCSS modules
+3. Maintains the component hierarchy
+4. Preserves style dependencies
+
+## 🎯 Project Structure Detection
+
+The CLI automatically detects your project structure and installs components in the appropriate location:
+
+```
+📁 Your Next.js Project
+├── 📁 app/                      # Next.js App Router
+│   └── 📁 components/
+│       └── 📁 once-ui-comp/    # Components installed here
+├── 📁 src/                      # Next.js Pages Router
+│   └── 📁 components/
+│       └── 📁 once-ui-comp/    # Or here
+└── 📁 components/              # Or in root components
+    └── 📁 once-ui-comp/        # If no src or app directory
+```
+
+## 📄 License
 
 MIT
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ by the Once UI Team</sub>
+</div>
