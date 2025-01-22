@@ -13,7 +13,7 @@ export async function list() {
     const components = await fetchComponentList();
     spinner.stop();
 
-    if (!components.length) {
+    if (!components || components.length === 0) {
       logger.info("No components available.");
       return;
     }

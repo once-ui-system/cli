@@ -28,6 +28,7 @@ export async function fetchComponentList(): Promise<Component[]> {
         description: getComponentDescription(file.name)
       }));
   } catch (error) {
+    console.error("Error fetching component list:", error);
     return [];
   }
 }
@@ -75,6 +76,7 @@ export async function fetchComponentData(componentName: string): Promise<Compone
       dependencies,
     };
   } catch (error) {
+    console.error(`Error fetching component data for ${componentName}:`, error);
     return null;
   }
 }
