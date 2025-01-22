@@ -1,29 +1,36 @@
 {
-    "name": "once-ui-kit",
-    "version": "1.1.0",
-    "description": "A CLI tool for adding UI components to your Next.js project.",
-    "main": "bin/once-ui.js",
-    "type": "module",
-    "bin": {
-        "once-ui": "./bin/once-ui.js"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "dependencies": {
-        "axios": "^1.7.9",
-        "chalk": "^5.4.1",
-        "commander": "^10.0.1",
-        "fs-extra": "^11.3.0",
-        "node-fetch": "^3.3.1",
-        "prompts": "^2.4.2"
-    },
-    "keywords": [
-        "UI",
-        "CLI",
-        "Next.js",
-        "components"
-    ],
-    "author": "SuhaibKing",
-    "license": "MIT"
+  "name": "once-ui-kit",
+  "version": "1.1.6",
+  "description": "Once UI Component Library CLI",
+  "type": "module",
+  "bin": {
+    "once-ui-kit": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "execa": "^8.0.1",
+    "fs-extra": "^11.2.0",
+    "ora": "^7.0.1",
+    "prompts": "^2.4.2",
+    "chalk": "^5.3.0",
+    "node-fetch": "^3.3.2",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.10.5",
+    "@types/prompts": "^2.4.9",
+    "tsup": "^8.0.1",
+    "vitest": "^1.1.0"
+  }
 }
