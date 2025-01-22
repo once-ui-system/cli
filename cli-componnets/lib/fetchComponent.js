@@ -1,39 +1,29 @@
-const fs = require("fs");
-const path = require("path");
-const https = require("https");
-const { resolveDependencies } = require("./resolveDependencies");
-const { logger } = require("./logger");
+import fs from "fs";
+import path from "path";
+import { logger } from "./logger.js";
 
-const BASE_URL = "https://raw.githubusercontent.com/once-ui-system/nextjs-starter/main/src/once-ui/components";
+export async function fetchComponent(component) {
+  const componentsDir = path.resolve("src/components");
+  const componentDir = path.resolve(componentsDir, component);
 
-const fetchFile = (url, dest) => {
-  return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
-      if (res.statusCode === 200) {
-        const fileStream = fs.createWriteStream(dest);
-        res.pipe(fileStream);
-        fileStream.on("finish", () => {
-          fileStream.close(resolve);
-        });
-      } else {
-        reject(new Error(`Failed to fetch file: ${url} (Status Code: ${res.statusCode})`));
-      }
-    });
-  });
-};
+  if (!fs.existsSync(componentsDir)) {
+    fs.mkdirSync(componentsDir, { recursive: true });
+    logger.success("Created components directory.");
+  }
 
-const fetchComponent = async (componentName) => {
-  const targetDir = path.resolve(process.cwd(), "src/components");
-  if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+  if (!fs.existsSync(componentDir)) {
+    fs.mkdirSync(componentDir, { recursive: true });
+    logger.success(`Created directory for ${component}.`);
+  }
 
-  const componentUrl = `${BASE_URL}/${componentName}.tsx`;
-  const componentPath = path.join(targetDir, `${componentName}.tsx`);
-
-  logger.info(`Downloading ${componentName} component...`);
-  await fetchFile(componentUrl, componentPath);
-
-  logger.info(`Resolving dependencies for ${componentName}...`);
-  await resolveDependencies(componentPath, targetDir);
-};
-
-module.exports = { fetchComponent };
+  const componentFile = path.resolve(componentDir, `${component}.jsx`);
+  if (!fs.existsSync(componentFile)) {
+    fs.writeFileSync(
+      componentFile,
+      `// ${component} Component\n\nexport default function ${component}() {\n  return <div>${component} works!</div>;\n}\n`
+    );
+    logger.success(`Created ${component} component file.`);
+  } else {
+    logger.info(`${component} already exists.`);
+  }
+}
