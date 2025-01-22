@@ -12,6 +12,11 @@ interface Component {
   description: string;
 }
 
+interface FetchResponse {
+  name: string;
+  content: string;
+}
+
 export async function fetchComponentList(): Promise<Component[]> {
   const config = await getConfig();
   
@@ -19,11 +24,11 @@ export async function fetchComponentList(): Promise<Component[]> {
     const response = await fetch(
       `${config.repository}/src/once-ui/components`
     );
-    const data = await response.json();
+    const data: FetchResponse[] = await response.json();
     
     return data
-      .filter((file: any) => file.name.endsWith('.tsx'))
-      .map((file: any) => ({
+      .filter((file) => file.name.endsWith('.tsx'))
+      .map((file) => ({
         name: file.name.replace('.tsx', ''),
         description: getComponentDescription(file.name)
       }));
@@ -61,12 +66,12 @@ export async function fetchComponentData(componentName: string): Promise<Compone
     const tsxResponse = await fetch(
       `${config.repository}/src/once-ui/components/${componentName}.tsx`
     );
-    const tsxData = await tsxResponse.json();
+    const tsxData: FetchResponse = await tsxResponse.json();
     
     const scssResponse = await fetch(
       `${config.repository}/src/once-ui/components/${componentName}.module.scss`
     );
-    const scssData = await scssResponse.json();
+    const scssData: FetchResponse = await scssResponse.json();
     
     const dependencies = extractDependencies(Buffer.from(tsxData.content, 'base64').toString());
 

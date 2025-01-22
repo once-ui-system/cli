@@ -23,9 +23,8 @@ program
   .version("1.1.5");
 
 program
-  .command("add")
+  .command("add <component>")
   .description("Add a component to your project")
-  .argument("<component>", "component name")
   .option("-y, --yes", "Skip confirmation prompt", false)
   .action(add);
 
@@ -44,9 +43,9 @@ program
 program.addHelpText("after", `
 Examples:
   $ once-ui-kit init              Initialize Once UI in your project
-  $ once-ui-kit list             List all available components
-  $ once-ui-kit add Button       Add Button component to your project
-  $ once-ui-kit add Alert -y     Add Alert component without confirmation
+  $ once-ui-kit list              List all available components
+  $ once-ui-kit add Button        Add Button component to your project
+  $ once-ui-kit add Alert -y      Add Alert component without confirmation
 `);
 
 program.parse();
