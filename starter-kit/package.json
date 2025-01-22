@@ -1,0 +1,29 @@
+{
+  "name": "create-once-ui-app",
+  "version": "1.0.1",
+  "description": "CLI tool to create Once UI projects using the Next.js starter kit",
+  "main": "index.js",
+  "bin": {
+    "create-once-ui-app": "./index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "once-ui",
+    "nextjs",
+    "starter",
+    "create-app"
+  ],
+  "author": "SuhaibKing",
+  "license": "MIT",
+  "dependencies": {
+    "simple-git": "^3.22.0",
+    "inquirer": "^9.2.12",
+    "shelljs": "^0.8.5",
+    "chalk": "^5.3.0",
+    "ora": "^7.0.1"
+  }
+}
