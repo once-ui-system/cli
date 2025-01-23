@@ -3,7 +3,7 @@ import path from 'path';
 import { fetchComponentContent, fetchStyleContent } from './github.js';
 import { getDependencies } from './parser.js';
 import { createSpinner } from './spinner.js';
-import { info } from './logger.js';
+import { info, error } from './logger.js';
 
 const GITHUB_STYLES_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/styles';
 const GITHUB_TOKENS_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/tokens';
