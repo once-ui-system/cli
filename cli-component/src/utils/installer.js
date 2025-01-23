@@ -10,6 +10,7 @@ const GITHUB_TOKENS_BASE = 'https://raw.githubusercontent.com/once-ui-system/mag
 const GITHUB_ICONS_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/icons.ts';
 const GITHUB_INTERFACES_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/interfaces.ts';
 const GITHUB_TYPES_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/types.ts';
+const GITHUB_USE_DEBOUNCE_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/hooks/useDebounce.ts';
 
 const styles = [
   'background.scss',
@@ -78,6 +79,15 @@ async function fetchAndInstallInterfacesAndTypes(targetDir) {
   }
 }
 
+async function fetchAndInstallUseDebounce(targetDir) {
+  try {
+    const response = await axios.get(GITHUB_USE_DEBOUNCE_BASE);
+    await fs.writeFile(path.join(targetDir, 'hooks', 'useDebounce.ts'), response.data);
+  } catch (err) {
+    error(`Error fetching useDebounce: ${err.message}`);
+  }
+}
+
 async function installComponent(componentName, targetDir = null) {
   // Detect project structure if targetDir not provided
   if (!targetDir) {
@@ -105,10 +115,11 @@ async function installComponent(componentName, targetDir = null) {
     // Install the component file
     await installFile(`${componentName}.tsx`, content, targetDir);
     
-    // Fetch and install styles, tokens, icons, interfaces, and types
+    // Fetch and install styles, tokens, icons, interfaces, types, and useDebounce
     await fetchAndInstallStylesAndTokens(targetDir);
     await fetchAndInstallIcons(targetDir);
     await fetchAndInstallInterfacesAndTypes(targetDir);
+    await fetchAndInstallUseDebounce(targetDir);
 
     spinner.succeed(`${componentName} installed`);
 
