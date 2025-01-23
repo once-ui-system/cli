@@ -7,6 +7,7 @@ import { info } from './logger.js';
 
 const GITHUB_STYLES_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/styles';
 const GITHUB_TOKENS_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/tokens';
+const GITHUB_ICONS_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/icons.ts';
 
 const styles = [
   'background.scss',
@@ -54,6 +55,15 @@ async function fetchAndInstallStylesAndTokens(targetDir) {
   }
 }
 
+async function fetchAndInstallIcons(targetDir) {
+  try {
+    const response = await axios.get(GITHUB_ICONS_BASE);
+    await fs.writeFile(path.join(targetDir, 'icons.ts'), response.data);
+  } catch (err) {
+    error(`Error fetching icons: ${err.message}`);
+  }
+}
+
 async function installComponent(componentName, targetDir = null) {
   // Detect project structure if targetDir not provided
   if (!targetDir) {
@@ -81,8 +91,9 @@ async function installComponent(componentName, targetDir = null) {
     // Install the component file
     await installFile(`${componentName}.tsx`, content, targetDir);
     
-    // Fetch and install styles and tokens
+    // Fetch and install styles, tokens, and icons
     await fetchAndInstallStylesAndTokens(targetDir);
+    await fetchAndInstallIcons(targetDir);
 
     spinner.succeed(`${componentName} installed`);
 
