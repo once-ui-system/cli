@@ -17,17 +17,15 @@ A powerful command-line interface for installing Once UI Kit components in your 
 
 ## 🚀 Quick Start
 
-```bash
-# Install globally (optional)
-npm install -g once-ui-kit
+You can use Once UI Kit CLI directly with npx:
 
-# Or use directly with npx
+```bash
 npx once-ui-kit init
 ```
 
 ## 📦 Installation
 
-You can install Once UI Kit CLI globally:
+You can install Once UI Kit CLI globally (optional):
 
 ```bash
 npm install -g once-ui-kit
