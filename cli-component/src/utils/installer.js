@@ -8,6 +8,8 @@ import { info } from './logger.js';
 const GITHUB_STYLES_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/styles';
 const GITHUB_TOKENS_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/tokens';
 const GITHUB_ICONS_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/icons.ts';
+const GITHUB_INTERFACES_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/interfaces.ts';
+const GITHUB_TYPES_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/types.ts';
 
 const styles = [
   'background.scss',
@@ -64,6 +66,18 @@ async function fetchAndInstallIcons(targetDir) {
   }
 }
 
+async function fetchAndInstallInterfacesAndTypes(targetDir) {
+  try {
+    const interfacesResponse = await axios.get(GITHUB_INTERFACES_BASE);
+    await fs.writeFile(path.join(targetDir, 'interfaces.ts'), interfacesResponse.data);
+    
+    const typesResponse = await axios.get(GITHUB_TYPES_BASE);
+    await fs.writeFile(path.join(targetDir, 'types.ts'), typesResponse.data);
+  } catch (err) {
+    error(`Error fetching interfaces or types: ${err.message}`);
+  }
+}
+
 async function installComponent(componentName, targetDir = null) {
   // Detect project structure if targetDir not provided
   if (!targetDir) {
@@ -91,9 +105,10 @@ async function installComponent(componentName, targetDir = null) {
     // Install the component file
     await installFile(`${componentName}.tsx`, content, targetDir);
     
-    // Fetch and install styles, tokens, and icons
+    // Fetch and install styles, tokens, icons, interfaces, and types
     await fetchAndInstallStylesAndTokens(targetDir);
     await fetchAndInstallIcons(targetDir);
+    await fetchAndInstallInterfacesAndTypes(targetDir);
 
     spinner.succeed(`${componentName} installed`);
 
