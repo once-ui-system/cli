@@ -5,31 +5,56 @@ import { getDependencies } from './parser.js';
 import { createSpinner } from './spinner.js';
 import { info } from './logger.js';
 
-async function detectProjectStructure() {
-  // Check for Next.js app directory structure
-  if (await fs.pathExists('./app')) {
-    return './app/components/once-ui-comp';
+const GITHUB_STYLES_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/styles';
+const GITHUB_TOKENS_BASE = 'https://raw.githubusercontent.com/once-ui-system/magic-portfolio/main/src/once-ui/tokens';
+
+const styles = [
+  'background.scss',
+  'border.scss',
+  'breakpoints.scss',
+  'color.scss',
+  'display.scss',
+  'flex.scss',
+  'global.scss',
+  'grid.scss',
+  'index.scss',
+  'layout.scss',
+  'position.scss',
+  'shadow.scss',
+  'size.scss',
+  'spacing.scss',
+  'typography.scss',
+  'utilities.scss'
+];
+
+const tokens = [
+  'border.scss',
+  'function.scss',
+  'index.scss',
+  'layout.scss',
+  'scheme.scss',
+  'shadow.scss',
+  'theme.scss',
+  'typography.scss'
+];
+
+async function fetchAndInstallStylesAndTokens(targetDir) {
+  for (const style of styles) {
+    const styleContent = await fetchStyleContent(style);
+    if (styleContent) {
+      await fs.writeFile(path.join(targetDir, style), styleContent);
+    }
   }
-  // Check for src directory structure
-  if (await fs.pathExists('./src')) {
-    return './src/components/once-ui-comp';
+
+  for (const token of tokens) {
+    const tokenContent = await fetchStyleContent(token);
+    if (tokenContent) {
+      await fs.writeFile(path.join(targetDir, token), tokenContent);
+    }
   }
-  // Default to root components directory
-  return './components/once-ui-comp';
 }
 
-async function installFile(fileName, content, targetDir) {
-  if (content) {
-    await fs.writeFile(
-      path.join(targetDir, fileName),
-      content
-    );
-    return true;
-  }
-  return false;
-}
-
-export async function installComponent(componentName, targetDir = null) {
+async function installComponent(componentName, targetDir = null) {
   // Detect project structure if targetDir not provided
   if (!targetDir) {
     targetDir = await detectProjectStructure();
@@ -45,17 +70,6 @@ export async function installComponent(componentName, targetDir = null) {
       info(`Installing components in: ${targetDir}`);
       global.installPathShown = true;
     }
-    
-    // If it's a SCSS file
-    if (componentName.endsWith('.module.scss')) {
-      const componentBaseName = componentName.replace('.module.scss', '');
-      const styleContent = await fetchStyleContent(componentBaseName);
-      if (styleContent) {
-        await installFile(componentName, styleContent, targetDir);
-        spinner.succeed(`Installed style: ${componentName}`);
-      }
-      return;
-    }
 
     // Fetch and install the component
     const content = await fetchComponentContent(componentName);
@@ -67,11 +81,8 @@ export async function installComponent(componentName, targetDir = null) {
     // Install the component file
     await installFile(`${componentName}.tsx`, content, targetDir);
     
-    // Fetch and install the component's style file
-    const styleContent = await fetchStyleContent(componentName);
-    if (styleContent) {
-      await installFile(`${componentName}.module.scss`, styleContent, targetDir);
-    }
+    // Fetch and install styles and tokens
+    await fetchAndInstallStylesAndTokens(targetDir);
 
     spinner.succeed(`${componentName} installed`);
 
