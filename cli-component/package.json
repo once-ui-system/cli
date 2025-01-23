@@ -1,6 +1,6 @@
 {
   "name": "once-ui-kit",
-  "version": "2.0.4",
+  "version": "2.0.3",
   "description": "CLI tool for installing Once UI Kit components",
   "type": "module",
   "bin": {
