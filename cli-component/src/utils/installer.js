@@ -89,9 +89,9 @@ async function fetchAndInstallUseDebounce(targetDir) {
 }
 
 async function installComponent(componentName, targetDir = null) {
-  // Detect project structure if targetDir not provided
+  // Set targetDir to the new path for consistency
   if (!targetDir) {
-    targetDir = await detectProjectStructure();
+    targetDir = path.join('src', 'once-ui', 'components');
   }
 
   const spinner = createSpinner(`Installing ${componentName}...`);
