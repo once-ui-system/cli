@@ -4,14 +4,14 @@ import boxen from 'boxen';
 
 export function welcome() {
   console.log('\n' + gradient.morning(
-    figlet.textSync('Once UI Kit', {
+    figlet.textSync('Once UI CLI', {
       font: 'Small',
       horizontalLayout: 'full'
     })
   ));
   
   console.log(boxen(
-    gradient.cristal('Welcome to Once UI Kit CLI! 🎉'),
+    gradient.cristal('Welcome to Once UI CLI! 🎉'),
     { 
       padding: 1,
       margin: 1,

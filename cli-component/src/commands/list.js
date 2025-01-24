@@ -6,7 +6,7 @@ import figlet from 'figlet';
 export async function list() {
   console.log(
     gradient.pastel(
-      figlet.textSync('Once UI Kit', { font: 'Small' })
+      figlet.textSync('Once UI CLI', { font: 'Small' })
     )
   );
 

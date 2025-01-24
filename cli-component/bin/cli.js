@@ -10,7 +10,7 @@ welcome();
 
 program
   .name('once-ui-cli')
-  .description('CLI tool for installing Once UI Kit components')
+  .description('CLI tool for installing Once UI  components')
   .version('1.0.0');
 
 program

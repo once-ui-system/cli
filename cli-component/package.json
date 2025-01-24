@@ -1,6 +1,6 @@
 {
   "name": "once-ui-cli",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "CLI tool for managing Once UI components",
   "type": "module",
   "bin": {
