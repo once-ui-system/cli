@@ -1,7 +1,7 @@
 {
-  "name": "once-ui-kit",
-  "version": "2.0.5",
-  "description": "CLI tool for installing Once UI Kit components",
+  "name": "once-ui-cli",
+  "version": "3.0.0",
+  "description": "CLI tool for managing Once UI components",
   "type": "module",
   "bin": {
     "once-ui-kit": "./bin/cli.js"
@@ -24,8 +24,9 @@
     "ui",
     "components",
     "cli",
-    "once-ui"
+    "once-ui",
+    "once-ui-cli"
   ],
-  "author": "",
+  "author": "SuhaibKing",
   "license": "MIT"
 }

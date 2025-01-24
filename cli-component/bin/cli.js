@@ -9,7 +9,7 @@ import { welcome } from '../src/utils/ui.js';
 welcome();
 
 program
-  .name('once-ui-kit')
+  .name('once-ui-cli')
   .description('CLI tool for installing Once UI Kit components')
   .version('1.0.0');
 

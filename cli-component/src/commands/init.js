@@ -14,7 +14,7 @@ export async function init() {
       {
         type: 'checkbox',
         name: 'components',
-        message: gradient.pastel('Select components to install:'),
+        message: gradient.pastel('Select components to add:'),
         choices: components.map(c => ({
           name: gradient.cristal(c),
           value: c
@@ -30,7 +30,7 @@ export async function init() {
     }
 
     console.log(boxen(
-      gradient.morning('\n🚀 Installing selected components...\n'),
+      gradient.morning('\n🚀 Adding selected components...\n'),
       { padding: 1, borderStyle: 'round', borderColor: 'cyan' }
     ));
 
@@ -38,8 +38,8 @@ export async function init() {
       await installComponent(component);
     }
 
-    success('All components installed successfully! 🎉');
+    success('All components added successfully! 🎉');
   } catch (error) {
-    spinner.fail(`Installation failed: ${error.message}`);
+    spinner.fail(`Initialization failed: ${error.message}`);
   }
 }

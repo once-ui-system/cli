@@ -1,19 +1,25 @@
 import { components } from '../utils/components.js';
 import { installComponent } from '../utils/installer.js';
-import { error, info } from '../utils/logger.js';
+import { error, success } from '../utils/logger.js';
 import gradient from 'gradient-string';
 import boxen from 'boxen';
 
 export async function add(componentName) {
+  // Check if the component exists
   if (!components.includes(componentName)) {
     error(`Component "${componentName}" not found.`);
-    info('\nAvailable components:');
     console.log(boxen(
-      gradient.cristal(components.join(', ')),
+      gradient.cristal(`Available components:\n${components.join(', ')}`),
       { padding: 1, margin: 1, borderStyle: 'round', borderColor: 'cyan' }
     ));
     return;
   }
 
-  await installComponent(componentName);
+  // Proceed to install the component
+  try {
+    await installComponent(componentName);
+    success(`${componentName} added successfully!`);
+  } catch (err) {
+    error(`Failed to add ${componentName}: ${err.message}`);
+  }
 }
