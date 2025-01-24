@@ -1,8 +1,8 @@
-# Once UI Kit CLI 🎨
+# Once UI cli CLI 🎨
 
-A powerful command-line interface for installing Once UI Kit components in your Next.js projects. Seamlessly integrate beautiful, reusable UI components with automatic dependency resolution and SCSS support.
+A powerful command-line interface for installing Once UI cli components in your Next.js projects. Seamlessly integrate beautiful, reusable UI components with automatic dependency resolution and SCSS support.
 
-![Once UI Kit CLI](https://raw.githubusercontent.com/once-ui-system/nextjs-starter/main/public/once-ui-banner.png)
+![Once UI CLI](https://raw.githubusercontent.com/once-ui-system/nextjs-starter/main/public/once-ui-banner.png)
 
 ## ✨ Features
 
@@ -19,24 +19,24 @@ A powerful command-line interface for installing Once UI Kit components in your 
 
 ```bash
 # Install globally (optional)
-npm install -g once-ui-kit
+npm install -g once-ui-cli
 
 # Or use directly with npx
-npx once-ui-kit init
+npx once-ui-cli init
 ```
 
 ## 📦 Installation
 
-You can install Once UI Kit CLI globally:
+You can install Once UI cli CLI globally:
 
 ```bash
-npm install -g once-ui-kit
+npm install -g once-ui-cli
 ```
 
 Or use it directly with npx (recommended):
 
 ```bash
-npx once-ui-kit <command>
+npx once-ui-cli <command>
 ```
 
 ## 🛠️ Usage
@@ -44,7 +44,7 @@ npx once-ui-kit <command>
 ### Initialize and Select Components
 
 ```bash
-npx once-ui-kit init
+npx once-ui-cli init
 ```
 
 This launches an interactive component selector where you can choose which components to install. Components will be installed in the appropriate directory based on your project structure:
@@ -56,12 +56,12 @@ This launches an interactive component selector where you can choose which compo
 ### Add a Specific Component
 
 ```bash
-npx once-ui-kit add <component-name>
+npx once-ui-cli add <component-name>
 ```
 
 Example:
 ```bash
-npx once-ui-kit add Accordion
+npx once-ui-cli add Accordion
 ```
 
 This will install the Accordion component along with its:
@@ -72,7 +72,7 @@ This will install the Accordion component along with its:
 ### List Available Components
 
 ```bash
-npx once-ui-kit list
+npx once-ui-cli list
 ```
 
 ## 📚 Available Components
