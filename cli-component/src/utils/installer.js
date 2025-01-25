@@ -13,7 +13,7 @@ async function detectProjectStructure() {
   }
   // Check for src directory structure
   if (await fs.pathExists('./src')) {
-    return './once-ui/components';
+    return './src/once-ui/components';
   }
   // Default to root components directory
   return './once-ui/components';
