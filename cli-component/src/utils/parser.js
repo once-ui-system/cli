@@ -5,7 +5,11 @@ export function getDependencies(content) {
   const importRegex = /import\s+{([^}]+)}\s+from\s+["']\.["'];?/g;
   const matches = [...content.matchAll(importRegex)];
   matches.forEach(match => {
-    const imports = match[1].split(',').map(imp => imp.trim());
+    const imports = match[1]
+      .split(',')
+      .map(imp => imp.trim())
+      .filter(imp => !imp.toLowerCase().includes('props')); // Ignore imports containing 'Props'
+    
     imports.forEach(imp => dependencies.add(imp));
   });
 

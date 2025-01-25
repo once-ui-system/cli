@@ -10,7 +10,7 @@ export async function fetchComponentContent(componentName) {
     const response = await axios.get(`${GITHUB_RAW_BASE}/${componentName}.tsx`);
     return response.data;
   } catch (err) {
-    error(`Error fetching ${componentName}: ${err.message}`);
+    // Suppress error for missing component files
     return null;
   }
 }
@@ -20,7 +20,7 @@ export async function fetchStyleContent(componentName) {
     const response = await axios.get(`${GITHUB_RAW_BASE}/${componentName}.module.scss`);
     return response.data;
   } catch (err) {
-    // Don't show error for missing style files as not all components have them
+    // Suppress error for missing style files
     return null;
   }
 }
@@ -30,7 +30,7 @@ export async function fetchStyleFile(styleName) {
     const response = await axios.get(`${STYLES_BASE}/${styleName}`);
     return response.data;
   } catch (err) {
-    error(`Error fetching style ${styleName}: ${err.message}`);
+    // Suppress error for missing style files
     return null;
   }
 }
@@ -40,7 +40,7 @@ export async function fetchTokenFile(tokenName) {
     const response = await axios.get(`${TOKENS_BASE}/${tokenName}`);
     return response.data;
   } catch (err) {
-    error(`Error fetching token ${tokenName}: ${err.message}`);
+    // Suppress error for missing token files
     return null;
   }
 }
