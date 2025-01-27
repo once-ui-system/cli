@@ -125,7 +125,7 @@ npx once-ui-cli list
 
 ## Documentation
 
-Learn more about Once UI components in the [Once UI documentation](https://once-ui.com/docs).
+Learn more about Once UI in the [Once UI docs](https://once-ui.com/docs).
 
 ## Contributors
 

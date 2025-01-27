@@ -1,14 +1,11 @@
 # create-once-ui-app
 
-A CLI tool to quickly create new projects using the Once UI Next.js starter kit.
+A powerful command-line interface for quickly creating new projects using Once UI for Next.js.
 
 ## Features
 
 - Clones the official Once UI Next.js starter kit
-- Interactive CLI interface
-- Option to create project in current directory or new folder
-- Automatic dependency installation
-- Simple and straightforward setup process
+- Automatically installs dependencies
 
 ## Installation
 
@@ -22,36 +19,14 @@ Or install it globally:
 
 ```bash
 npm install -g create-once-ui-app
-```
-
-## Usage
-
-### Using npx (recommended)
-
-```bash
-npx create-once-ui-app@latest
-```
-
-### If installed globally
-
-```bash
 create-once-ui-app
 ```
-
-Follow the interactive prompts to:
-1. Choose whether to use the current directory or create a new one
-2. If creating a new directory, provide a name for your project
-
-The tool will then:
-1. Clone the Once UI Next.js starter kit
-2. Install all dependencies
-3. Set up your project and make it ready for development
 
 ## Development
 
 After creating your project:
 
-1. Navigate to your project directory (if a new directory was created)
+1. Navigate to your project directory
 2. Start the development server:
    ```bash
    npm run dev
@@ -73,6 +48,21 @@ The tool performs the following steps:
 - Git installed on your system
 - npm or yarn package manager
 
-## License
+## Documentation
+
+Learn more about Once UI in the [Once UI docs](https://once-ui.com/docs).
+
+## Contributors
+
+CLI built by Suhaib King (https://github.com/suhaib3100)
+Once UI is built by Lorant (https://github.com/lorant-one) and Zsofia (https://github.com/zsofiakm)
+
+## 📄 License
 
 MIT
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ by the Once UI Team</sub>
+</div>

@@ -1,13 +1,14 @@
-# Once UI Ecosystem 🎨
+# Once UI Ecosystem
 
-A comprehensive toolkit for building beautiful Next.js applications with Once UI components. This repository includes two powerful tools:
+A comprehensive toolkit for building beautiful Next.js applications with Once UI components.
 
-1. **Once UI Kit CLI** - Install and manage Once UI components in your existing projects
-2. **create-once-ui-app** - Bootstrap new projects with the Once UI Next.js starter kit
+This repository includes two powerful tools:
+1. **Once UI CLI** - Install and manage Once UI components in your existing projects
+2. **create-once-ui-app** - Bootstrap new projects with Once UI for Next.js
 
-![Once UI Kit CLI](https://raw.githubusercontent.com/once-ui-system/nextjs-starter/main/public/once-ui-banner.png)
+![Once UI CLI](https://github.com/once-ui-system/nextjs-starter/blob/main/public/images/cover.jpg?raw=true)
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Create a New Project
 
@@ -20,29 +21,23 @@ npx create-once-ui-app@latest
 
 ```bash
 # Install components in your project
-npx once-ui-kit init
+npx once-ui-cli init
 ```
 
-## ✨ Features
+## Features
 
-### Once UI Kit CLI
-- 🎯 Interactive component selection
-- 🔄 Automatic dependency resolution
-- 🎨 SCSS module support
-- 📁 Smart project structure detection
-- 💅 Professional CLI interface
-- ⚡ Fast and easy installation
-- 🔍 Component preview and search
-- 🛠️ Zero configuration needed
+### Once UI CLI
+- Interactive component selection
+- Automatic dependency resolution
+- Smart project structure detection
+- Fast and easy installation
+- SCSS module support
 
 ### create-once-ui-app
-- 🏗️ Clones the official Once UI Next.js starter kit
-- 🤖 Interactive CLI interface
-- 📂 Flexible project location options
-- 📦 Automatic dependency installation
-- 🎮 Simple setup process
+- Clones the official Once UI Next.js starter kit
+- Automatically installs dependencies
 
-## 📦 Installation & Usage
+## Installation & Usage
 
 ### Create New Project
 
@@ -55,36 +50,31 @@ npm install -g create-once-ui-app
 create-once-ui-app
 ```
 
-Follow the interactive prompts to:
-1. Choose project location (current directory or new folder)
-2. Provide project name (if creating new directory)
-3. Wait for automatic setup and installation
-
 ### Install Components
 
 ```bash
 # Using npx (recommended)
-npx once-ui-kit <command>
+npx once-ui-cli <command>
 
 # Or install globally
-npm install -g once-ui-kit
-once-ui-kit <command>
+npm install -g once-ui-cli
+once-ui-cli <command>
 ```
 
 Available commands:
 
 ```bash
 # Initialize and select components
-npx once-ui-kit init
+npx once-ui-cli init
 
 # Add a specific component
-npx once-ui-kit add <component-name>
+npx once-ui-cli add <component-name>
 
 # List all available components
-npx once-ui-kit list
+npx once-ui-cli list
 ```
 
-## 📚 Available Components
+## Available Components
 
 <details>
 <summary>Click to expand component list</summary>
@@ -158,35 +148,14 @@ npx once-ui-kit list
 
 </details>
 
-## 🔄 Smart Features
+## Documentation
 
-### Automatic Dependency Resolution
-When installing components, the CLI automatically:
-1. Detects and installs required component dependencies
-2. Installs associated SCSS modules
-3. Maintains the component hierarchy
-4. Preserves style dependencies
+Learn more about Once UI in the [Once UI docs](https://once-ui.com/docs).
 
-### Project Structure Detection
-Components are installed in the appropriate location based on your project structure:
+## Contributors
 
-```
-📁 Your Next.js Project
-├── 📁 app/                      # Next.js App Router
-│   └── 📁 components/
-│       └── 📁 once-ui-comp/    # Components installed here
-├── 📁 src/                      # Next.js Pages Router
-│   └── 📁 components/
-│       └── 📁 once-ui-comp/    # Or here
-└── 📁 components/              # Or in root components
-    └── 📁 once-ui-comp/        # If no src or app directory
-```
-
-## ⚙️ Requirements
-
-- Node.js 14.0.0 or later
-- Git installed on your system
-- npm or yarn package manager
+CLI built by Suhaib King (https://github.com/suhaib3100)
+Once UI is built by Lorant (https://github.com/lorant-one) and Zsofia (https://github.com/zsofiakm)
 
 ## 📄 License
 
