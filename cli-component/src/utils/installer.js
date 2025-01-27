@@ -43,7 +43,7 @@ export async function installComponent(componentName, targetDir = null) {
     
     // Show installation directory on first component
     if (!global.installPathShown) {
-      info(`Adding components in: ${targetDir}`);
+      info(` Adding components in: ${targetDir}`);
       global.installPathShown = true;
     }
     

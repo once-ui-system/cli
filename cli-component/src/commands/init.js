@@ -14,9 +14,9 @@ export async function init() {
       {
         type: 'checkbox',
         name: 'components',
-        message: gradient.pastel('Select components to add:'),
+        message: 'Select components to add:',
         choices: components.map(c => ({
-          name: gradient.cristal(c),
+          name: c,
           value: c
         })),
         pageSize: 20,

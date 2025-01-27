@@ -11,10 +11,9 @@ export function welcome() {
   ));
   
   console.log(boxen(
-    gradient.cristal('Welcome to Once UI CLI! 🎉'),
+    gradient.cristal('Welcome to Once UI CLI'),
     { 
       padding: 1,
-      margin: 1,
       borderStyle: 'round',
       borderColor: 'cyan'
     }
