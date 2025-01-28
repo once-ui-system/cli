@@ -9,14 +9,14 @@ import { info } from './logger.js';
 async function detectProjectStructure() {
   // Check for Next.js app directory structure
   if (await fs.pathExists('./app')) {
-    return './once-ui/components';
+    return './once-ui';
   }
   // Check for src directory structure
   if (await fs.pathExists('./src')) {
-    return './src/once-ui/components';
+      return './src/once-ui';
   }
   // Default to root components directory
-  return './once-ui/components';
+  return './once-ui';
 }
 
 async function installFile(fileName, content, targetDir) {
@@ -36,14 +36,15 @@ export async function installComponent(componentName, targetDir = null) {
     targetDir = await detectProjectStructure();
   }
 
+  const componentsDir = path.join(targetDir, 'components');
   const spinner = createSpinner(`Adding ${componentName}...`);
 
   try {
-    await fs.ensureDir(targetDir);
+    await fs.ensureDir(componentsDir);
     
     // Show installation directory on first component
     if (!global.installPathShown) {
-      info(` Adding components in: ${targetDir}`);
+      info(` Adding components in: ${componentsDir}`);
       global.installPathShown = true;
     }
     
@@ -52,7 +53,7 @@ export async function installComponent(componentName, targetDir = null) {
       const componentBaseName = componentName.replace('.module.scss', '');
       const styleContent = await fetchStyleContent(componentBaseName);
       if (styleContent) {
-        await installFile(componentName, styleContent, targetDir);
+        await installFile(componentName, styleContent, componentsDir);
         spinner.succeed(`Added style: ${componentName}`);
       }
       return;
@@ -66,12 +67,12 @@ export async function installComponent(componentName, targetDir = null) {
     }
 
     // Install the component file
-    await installFile(`${componentName}.tsx`, content, targetDir);
+    await installFile(`${componentName}.tsx`, content, componentsDir);
     
     // Fetch and install the component's style file
     const styleContent = await fetchStyleContent(componentName);
     if (styleContent) {
-      await installFile(`${componentName}.module.scss`, styleContent, targetDir);
+      await installFile(`${componentName}.module.scss`, styleContent, componentsDir);
     }
 
     spinner.succeed(`${componentName} added`);
@@ -80,38 +81,38 @@ export async function installComponent(componentName, targetDir = null) {
     const dependencies = await getDependencies(content);
     for (const dep of dependencies) {
       if (dep.endsWith('.module.scss')) {
-        if (!await fs.pathExists(path.join(targetDir, dep))) {
-          await installComponent(dep, targetDir);
+        if (!await fs.pathExists(path.join(componentsDir, dep))) {
+          await installComponent(dep, componentsDir);
         }
-      } else if (!await fs.pathExists(path.join(targetDir, `${dep}.tsx`))) {
-        await installComponent(dep, targetDir);
+      } else if (!await fs.pathExists(path.join(componentsDir, `${dep}.tsx`))) {
+        await installComponent(dep, componentsDir);
       }
     }
 
     // Install styles and tokens
-    await installStylesAndTokens();
+    await installStylesAndTokens(targetDir);
 
     // Create icons.ts file
-    await createIconsFile();
+    await createIconsFile(targetDir);
 
     // Install interfaces and types
-    await installInterfacesAndTypes();
+    await installInterfacesAndTypes(targetDir);
 
     // Create hooks directory and install useDebounce
-    await installUseDebounce();
+    await installUseDebounce(targetDir);
 
     // Install config.js file
-    await installConfigFile();
+    await installConfigFile(targetDir);
   } catch (error) {
     // Suppress error messages
   }
 }
 
-async function createIconsFile() {
-  const iconsFilePath = './once-ui/icons.ts';
+async function createIconsFile(targetDir) {
+  const iconsFilePath = path.join(targetDir, 'icons.ts');
   const iconsContent = await fetchIconsContent();
 
-  await installFile('icons.ts', iconsContent, './once-ui');
+  await installFile('icons.ts', iconsContent, targetDir);
 }
 
 async function fetchIconsContent() {
@@ -125,15 +126,15 @@ async function fetchIconsContent() {
   }
 }
 
-async function installInterfacesAndTypes() {
-  const interfacesFilePath = './once-ui/interfaces.ts';
-  const typesFilePath = './once-ui/types.ts';
+async function installInterfacesAndTypes(targetDir) {
+  const interfacesFilePath = path.join(targetDir, 'interfaces.ts');
+  const typesFilePath = path.join(targetDir, 'types.ts');
 
   const interfacesContent = await fetchInterfacesContent();
   const typesContent = await fetchTypesContent();
 
-  await installFile('interfaces.ts', interfacesContent, './once-ui');
-  await installFile('types.ts', typesContent, './once-ui');
+  await installFile('interfaces.ts', interfacesContent, targetDir);
+  await installFile('types.ts', typesContent, targetDir);
 }
 
 async function fetchInterfacesContent() {
@@ -158,11 +159,11 @@ async function fetchTypesContent() {
   }
 }
 
-async function installUseDebounce() {
-  const hooksDir = './once-ui/hooks';
+async function installUseDebounce(targetDir) {
+  const hooksDir = path.join(targetDir, 'hooks');
   await fs.ensureDir(hooksDir); // Create hooks directory if it doesn't exist
 
-  const useDebounceFilePath = './once-ui/hooks/useDebounce.ts';
+  const useDebounceFilePath = path.join(hooksDir, 'useDebounce.ts');
   const useDebounceContent = await fetchUseDebounceContent();
 
   await installFile('useDebounce.ts', useDebounceContent, hooksDir);
@@ -179,11 +180,11 @@ async function fetchUseDebounceContent() {
   }
 }
 
-async function installConfigFile() {
-  const resourcesDir = './once-ui/resources';
+async function installConfigFile(targetDir) {
+  const resourcesDir = path.join(targetDir, 'resources');
   await fs.ensureDir(resourcesDir); // Create resources directory if it doesn't exist
 
-  const configFilePath = './once-ui/resources/config.js';
+  const configFilePath = path.join(resourcesDir, 'config.js');
   const configContent = await fetchConfigContent();
 
   await installFile('config.js', configContent, resourcesDir);
@@ -200,9 +201,9 @@ async function fetchConfigContent() {
   }
 }
 
-async function installStylesAndTokens() {
-  const stylesDir = './once-ui/styles';
-  const tokensDir = './once-ui/tokens';
+async function installStylesAndTokens(targetDir) {
+  const stylesDir = path.join(targetDir, 'styles');
+  const tokensDir = path.join(targetDir, 'tokens');
 
   // Create directories for styles and tokens
   await fs.ensureDir(stylesDir);
