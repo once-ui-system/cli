@@ -1,6 +1,6 @@
 {
   "name": "create-magic-portfolio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "✨ Professional CLI tool for Magic Portfolio installation",
   "main": "index.js",
   "bin": {
@@ -30,6 +30,7 @@
     "gradient-string": "^2.0.2",
     "boxen": "^7.1.1",
     "confetti-js": "^0.0.18",
-    "terminal-link": "^2.1.1"
+    "terminal-link": "^2.1.1",
+    "semver": "^7.6.0"
   }
 } 
