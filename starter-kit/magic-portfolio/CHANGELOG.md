@@ -2,7 +2,7 @@
 
 All notable changes to the Magic Portfolio CLI tool will be documented in this file.
 
-## [1.0.1] - 2024-03-25
+   2024-03-25
 
 ### Added
 - Professional header with gradient styling using `boxen` and `gradient-string`

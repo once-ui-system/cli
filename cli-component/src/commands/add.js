@@ -4,8 +4,15 @@ import { error, success } from '../utils/logger.js';
 import boxen from 'boxen';
 
 export async function add(componentName) {
+  // Convert component name to lowercase for case-insensitive comparison
+  const normalizedComponentName = componentName.toLowerCase();
+  const normalizedComponents = components.map(c => c.toLowerCase());
+  
+  // Find the original case version of the component
+  const originalComponentName = components.find(c => c.toLowerCase() === normalizedComponentName);
+  
   // Check if the component exists
-  if (!components.includes(componentName)) {
+  if (!normalizedComponents.includes(normalizedComponentName)) {
     error(`Component "${componentName}" not found.`);
     console.log(boxen(
       `Available components:\n${components.join(', ')}`,
@@ -14,11 +21,11 @@ export async function add(componentName) {
     return;
   }
 
-  // Proceed to install the component
+  // Proceed to install the component using the original case version
   try {
-    await installComponent(componentName);
-    success(`${componentName} added successfully!`);
+    await installComponent(originalComponentName);
+    success(`${originalComponentName} added successfully!`);
   } catch (err) {
-    error(`Failed to add ${componentName}: ${err.message}`);
+    error(`Failed to add ${originalComponentName}: ${err.message}`);
   }
 }
