@@ -1,0 +1,35 @@
+{
+  "name": "create-magic-portfolio",
+  "version": "1.0.0",
+  "description": "✨ Professional CLI tool for Magic Portfolio installation",
+  "main": "index.js",
+  "bin": {
+    "create-magic-portfolio": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "portfolio",
+    "cli",
+    "once-ui",
+    "nextjs",
+    "react",
+    "magic-portfolio"
+  ],
+  "author": "SuhaibKing",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "inquirer": "^8.2.6",
+    "ora": "^5.4.1",
+    "simple-git": "^3.22.0",
+    "fs-extra": "^11.2.0",
+    "gradient-string": "^2.0.2",
+    "boxen": "^7.1.1",
+    "confetti-js": "^0.0.18",
+    "terminal-link": "^2.1.1"
+  }
+} 
