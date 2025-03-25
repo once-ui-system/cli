@@ -19,7 +19,7 @@ All notable changes to the Magic Portfolio CLI tool will be documented in this f
   - Analytics Integration
   - SEO Optimization
   - Multi-language Support
-  - Custom Animations
+  - Custom Animation
 - Automatic dependency installation option
 - Configuration file generation with feature-specific settings
 - Feature-specific directory and file creation
