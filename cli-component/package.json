@@ -26,7 +26,8 @@
     "components",
     "cli",
     "once-ui",
-    "once-ui-cli"
+    "once-ui-cli",
+    "once-ui-kit"
   ],
   "author": "SuhaibKing",
   "license": "MIT"
