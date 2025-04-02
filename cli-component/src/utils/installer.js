@@ -131,7 +131,14 @@ export async function installComponent(componentName, targetDir = null) {
         await installComponent(dep, targetDir);
       }
     }
+  } catch (error) {
+    throw error;
+  }
+}
 
+// New function to install shared resources
+export async function installSharedResources() {
+  try {
     // Install styles and tokens
     await installStylesAndTokens();
 
@@ -228,11 +235,20 @@ async function fetchConfigContent() {
 async function installConfigFile() {
   const appDir = await detectAppStructure();
   const resourcesDir = path.join(appDir, 'resources');
+  const configPath = path.join(resourcesDir, 'config.js');
 
   try {
     await fs.ensureDir(resourcesDir);
+    console.log('Downloading config file...');
     const configContent = await fetchConfigContent();
+    
     if (configContent) {
+      const exists = await fs.pathExists(configPath);
+      if (exists) {
+        console.log('✓ Config file already exists, updating...');
+      } else {
+        console.log('✓ Config file downloaded, installing...');
+      }
       await installFile('config.js', configContent, resourcesDir);
       console.log('✓ Config file installed');
     } else {
