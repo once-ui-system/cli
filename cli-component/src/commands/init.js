@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { components } from '../utils/components.js';
+import { getComponents } from '../utils/components.js';
 import { installComponent } from '../utils/installer.js';
 import { success, info } from '../utils/logger.js';
 import { createSpinner } from '../utils/spinner.js';
@@ -7,6 +7,7 @@ import gradient from 'gradient-string';
 import boxen from 'boxen';
 
 export async function init() {
+  const components = await getComponents();
   const spinner = createSpinner('Preparing component list...');
   
   try {

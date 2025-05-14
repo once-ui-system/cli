@@ -1,4 +1,4 @@
-import { components } from '../utils/components.js';
+import { getComponents } from '../utils/components.js';
 import gradient from 'gradient-string';
 import boxen from 'boxen';
 import figlet from 'figlet';
@@ -9,6 +9,8 @@ export async function list() {
       figlet.textSync('Once UI CLI', { font: 'Small' })
     )
   );
+
+  const components = await getComponents();
 
   console.log(boxen(
     gradient.morning('\nAvailable Components:\n\n') +
