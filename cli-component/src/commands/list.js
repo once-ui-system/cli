@@ -2,6 +2,7 @@ import { getComponents } from '../utils/components.js';
 import gradient from 'gradient-string';
 import boxen from 'boxen';
 import figlet from 'figlet';
+import { error } from "../utils/logger.js";
 
 export async function list() {
   console.log(
@@ -11,6 +12,10 @@ export async function list() {
   );
 
   const components = await getComponents();
+
+    if (!components || components.length === 0) {
+      error('No components found');
+    }
 
   console.log(boxen(
     gradient.morning('\nAvailable Components:\n\n') +

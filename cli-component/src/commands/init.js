@@ -7,9 +7,15 @@ import gradient from 'gradient-string';
 import boxen from 'boxen';
 
 export async function init() {
-  const components = await getComponents();
   const spinner = createSpinner('Preparing component list...');
-  
+
+  const components = await getComponents();
+
+    if (!components || components.length === 0) {
+        spinner.fail('No components found');
+        return;
+    }
+
   try {
     const answers = await inquirer.prompt([
       {

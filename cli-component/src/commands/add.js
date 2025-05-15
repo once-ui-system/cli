@@ -43,6 +43,11 @@ async function installComponents(componentsToInstall) {
 
 export async function add(componentName) {
   const components = await getComponents();
+
+    if (!components || components.length === 0) {
+        error('No components found');
+        return;
+    }
   // If no component name provided, show interactive selection
   if (!componentName) {
     const choices = components.map(c => ({ name: c, value: c }));
