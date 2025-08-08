@@ -1,3 +1,5 @@
+> We recommend using our new [NPM package](https://www.npmjs.com/package/@once-ui-system/core) instead of this CLI tool.
+
 # Once UI Ecosystem
 
 A comprehensive toolkit for building beautiful Next.js applications with Once UI components.
@@ -5,8 +7,6 @@ A comprehensive toolkit for building beautiful Next.js applications with Once UI
 This repository includes two powerful tools:
 1. **Once UI CLI** - Install and manage Once UI components in your existing projects
 2. **create-once-ui-app** - Bootstrap new projects with Once UI for Next.js
-
-![Once UI CLI](https://github.com/once-ui-system/nextjs-starter/blob/main/public/images/cover.jpg?raw=true)
 
 ## Quick Start
 
