@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { components } from '../utils/components.js';
+import { getComponents } from '../utils/components.js';
 import { installComponent } from '../utils/installer.js';
 import { success, info } from '../utils/logger.js';
 import { createSpinner } from '../utils/spinner.js';
@@ -8,7 +8,14 @@ import boxen from 'boxen';
 
 export async function init() {
   const spinner = createSpinner('Preparing component list...');
-  
+
+  const components = await getComponents();
+
+    if (!components || components.length === 0) {
+        spinner.fail('No components found');
+        return;
+    }
+
   try {
     const answers = await inquirer.prompt([
       {

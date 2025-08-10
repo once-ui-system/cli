@@ -1,4 +1,4 @@
-import { components } from '../utils/components.js';
+import { getComponents } from '../utils/components.js';
 import { installComponent } from '../utils/installer.js';
 import { error, success, info } from '../utils/logger.js';
 import boxen from 'boxen';
@@ -42,6 +42,12 @@ async function installComponents(componentsToInstall) {
 }
 
 export async function add(componentName) {
+  const components = await getComponents();
+
+    if (!components || components.length === 0) {
+        error('No components found');
+        return;
+    }
   // If no component name provided, show interactive selection
   if (!componentName) {
     const choices = components.map(c => ({ name: c, value: c }));
