@@ -1,0 +1,4 @@
+name "once-ui"
+description "The new CLI app for creating Once UI apps from templates, viewing docs, etc."
+authors "mostypc123"
+license "MIT"
