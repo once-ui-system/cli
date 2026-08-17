@@ -1,5 +1,7 @@
 > We recommend using our new [NPM package](https://www.npmjs.com/package/@once-ui-system/core) instead of this CLI tool.
 
+> The CLI is being rewritten on the develop branch.
+
 # Once UI Ecosystem
 
 A comprehensive toolkit for building beautiful Next.js applications with Once UI components.
