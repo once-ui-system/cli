@@ -1,4 +1,5 @@
 import log;
+import std.process : spawnShell, wait;
 
 void parse_url(ref string unparsed) {
   import std.array : replace;
@@ -50,13 +51,11 @@ bool command_in_path(string command) {
 
 /* Returns 2 if Git is not installed. */
 int clone_git_repo(string repo, string dir = ".") {
-  import std.process : spawnShell, wait;
-
-  log.info("Cloning " ~ repo);
+  log.info("Cloning \033[1m" ~ repo ~ "\033[0m");
 
   if (!command_in_path("git")) {
     log.error(
-      "Git is not installed. Install it for your platform at https://git-scm.com/install/"
+      "Git is not installed. Install it for your platform at \033[1mhttps://git-scm.com/install/\033[0m."
     );
     return 2;
   }
@@ -64,10 +63,26 @@ int clone_git_repo(string repo, string dir = ".") {
   // Command injection is not possible here since all args are taken
   // from argv, so if anything is injected the parent shell runs it,
   // not this shell. Think before saying there is a vulnerability.
-  const auto command = "git clone --depth=1 " ~ repo;
+  const auto command = "git clone --depth=1 " ~ repo ~ " " ~ dir;
 
   auto pid = spawnShell(command);
-  auto status = wait(pid);
+  const auto status = wait(pid);
+
+  return status;
+}
+
+int npm_install() {
+  log.info("Installing dependencies");
+
+  if (!command_in_path("npm")) {
+    log.error(
+      "NPM is not installed. Install it for your platform at \033[1mhttps://nodejs.org/en/download/\033[0m."
+    );
+    return 2;
+  }
+
+  auto pid = spawnShell("npm install --loglevel info");
+  const auto status = wait(pid);
 
   return status;
 }
@@ -100,6 +115,17 @@ bool create_project_from_template(string name, string dir) {
   }
 
   chdir(dir);
+  if (npm_install() != 0) {
+    log.error("Failed to install dependencies!");
+    return false;
+  }
+  log.ok("Installed dependencies!\n");
+
+  log.ok("Created project from \033[1m" ~ name ~ "\033[0m");
+  log.info("Start the dev server:");
+  log.verbose("cd " ~ dir);
+  log.verbose("npm run dev");
+  log.info("Have fun!");
 
   return true;
 }

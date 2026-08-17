@@ -26,7 +26,7 @@ int main(string[] argv) {
 
   } else if (argv[1] == "create") {
     
-    bool from_template = false;
+    bool from_other_template = false;
     string dir;
     string template_git_repo_url;
 
@@ -37,7 +37,7 @@ int main(string[] argv) {
 
     if (argv[2] == "-t") {
       
-      from_template = true;
+      from_other_template = true;
 
       if (argc <= 4) {
         log.error("You must specify a template Git URL to use, and a directory to create it in.");
@@ -52,6 +52,17 @@ int main(string[] argv) {
       dir = argv[2];
 
     }
+
+    if (from_other_template)
+      return create_project_from_template(template_git_repo_url, dir) == false;
+    else
+      return create_project_from_template("@once-ui-system/nextjs-starter", dir) == false;
+  
+  } else {
+  
+    log.error("Unknown argument " ~ argv[1]);
+    log.info("Try once-ui --help.");
+    return 2;
 
   }
 
