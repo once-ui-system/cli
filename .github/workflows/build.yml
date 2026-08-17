@@ -1,0 +1,80 @@
+name: Build once-ui
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.message, '[trigger ci]') ||
+      (github.event_name == 'pull_request' &&
+       contains(github.event.pull_request.title, '[trigger ci]'))
+
+    name: ${{ matrix.os }}-${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: linux
+            arch: x86_64
+            runner: ubuntu-24.04
+            artifact: once-ui-linux-x86_64
+
+          - os: linux
+            arch: arm64
+            runner: ubuntu-24.04-arm
+            artifact: once-ui-linux-arm64
+
+          - os: windows
+            arch: x86_64
+            runner: windows-2025
+            artifact: once-ui-windows-x86_64
+
+          - os: windows
+            arch: arm64
+            runner: windows-11-arm
+            artifact: once-ui-windows-arm64
+
+          - os: macos
+            arch: x86_64
+            runner: macos-15-intel
+            artifact: once-ui-macos-x86_64
+
+          - os: macos
+            arch: arm64
+            runner: macos-15
+            artifact: once-ui-macos-arm64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install D
+        uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ldc-latest
+
+      - name: Build
+        run: dub build --build=release
+
+      - name: Prepare artifact
+        shell: bash
+        run: |
+          mkdir -p artifact
+
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            cp once-ui.exe artifact/
+          else
+            cp once-ui artifact/
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: artifact/
