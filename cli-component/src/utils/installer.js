@@ -9,12 +9,43 @@ async function detectProjectStructure() {
   if (await fs.pathExists('./app')) {
     return './once-ui/components';
   }
+  // Check for Next.js pages directory structure
+  if (await fs.pathExists('./pages')) {
+    return './once-ui/components';
+  }
   // Check for src directory structure
   if (await fs.pathExists('./src')) {
-    return './src/once-ui/components';
+    if (await fs.pathExists('./src/app')) {
+      return './src/once-ui/components';
+    }
+    if (await fs.pathExists('./src/pages')) {
+      return './src/once-ui/components';
+    }
   }
   // Default to root components directory
   return './once-ui/components';
+}
+
+async function detectAppStructure() {
+  // Check for Next.js app directory structure
+  if (await fs.pathExists('./app')) {
+    return './app';
+  }
+  // Check for Next.js pages directory structure
+  if (await fs.pathExists('./pages')) {
+    return './pages';
+  }
+  // Check for src directory structure
+  if (await fs.pathExists('./src')) {
+    if (await fs.pathExists('./src/app')) {
+      return './src/app';
+    }
+    if (await fs.pathExists('./src/pages')) {
+      return './src/pages';
+    }
+  }
+  // Default to app directory
+  return './app';
 }
 
 async function installFile(fileName, content, targetDir) {
@@ -26,6 +57,33 @@ async function installFile(fileName, content, targetDir) {
     return true;
   }
   return false;
+}
+
+async function ensureLayoutImports() {
+  const appDir = await detectAppStructure();
+  const layoutPath = path.join(appDir, 'layout.css');
+
+  const imports = [
+    '@import "@/once-ui/styles/index.scss";',
+    '@import "@/once-ui/tokens/index.scss";'
+  ];
+
+  try {
+    let content = '';
+    if (await fs.pathExists(layoutPath)) {
+      content = await fs.readFile(layoutPath, 'utf-8');
+    }
+
+    // Check if imports already exist
+    const hasImports = imports.every(imp => content.includes(imp));
+    if (!hasImports) {
+      // Add imports at the beginning of the file
+      const newContent = imports.join('\n') + '\n\n' + content;
+      await fs.writeFile(layoutPath, newContent);
+    }
+  } catch (err) {
+    console.error('Failed to update layout.css:', err.message);
+  }
 }
 
 export async function installComponent(componentName, targetDir = null) {
@@ -73,7 +131,14 @@ export async function installComponent(componentName, targetDir = null) {
         await installComponent(dep, targetDir);
       }
     }
+  } catch (error) {
+    throw error;
+  }
+}
 
+// New function to install shared resources
+export async function installSharedResources() {
+  try {
     // Install styles and tokens
     await installStylesAndTokens();
 
@@ -88,6 +153,9 @@ export async function installComponent(componentName, targetDir = null) {
 
     // Install config.js file
     await installConfigFile();
+
+    // Ensure layout.css has required imports
+    await ensureLayoutImports();
   } catch (error) {
     throw error;
   }
@@ -153,20 +221,41 @@ async function fetchUseDebounceContent() {
   }
 }
 
-async function installConfigFile() {
-  const resourcesDir = './once-ui/resources';
-  await fs.ensureDir(resourcesDir);
-  const configContent = await fetchConfigContent();
-  await installFile('config.js', configContent, resourcesDir);
-}
-
 async function fetchConfigContent() {
-  const GITHUB_CONFIG_URL = 'https://raw.githubusercontent.com/once-ui-system/nextjs-starter/main/src/once-ui/resources/config.js';
+  const GITHUB_CONFIG_URL = 'https://raw.githubusercontent.com/once-ui-system/nextjs-starter/main/src/app/resources/config.js';
   try {
     const response = await axios.get(GITHUB_CONFIG_URL);
     return response.data;
   } catch (err) {
+    console.error('Failed to fetch config file:', err.message);
     return '';
+  }
+}
+
+async function installConfigFile() {
+  const appDir = await detectAppStructure();
+  const resourcesDir = path.join(appDir, 'resources');
+  const configPath = path.join(resourcesDir, 'config.js');
+
+  try {
+    await fs.ensureDir(resourcesDir);
+    console.log('Downloading config file...');
+    const configContent = await fetchConfigContent();
+    
+    if (configContent) {
+      const exists = await fs.pathExists(configPath);
+      if (exists) {
+        console.log('✓ Config file already exists, updating...');
+      } else {
+        console.log('✓ Config file downloaded, installing...');
+      }
+      await installFile('config.js', configContent, resourcesDir);
+      console.log('✓ Config file installed');
+    } else {
+      console.error('Failed to install config file: No content received');
+    }
+  } catch (err) {
+    console.error('Failed to install config file:', err.message);
   }
 }
 
